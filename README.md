@@ -6,10 +6,13 @@ RioFS is an userspace filesystem for Amazon S3 buckets for servers that run on L
 
 * C compiler
 * glib >= 2.22
+* autoconf
+* automake
 * fuse >= 2.7.3
 * libevent >= 2.0
 * libxml >= 2.6
 * libcrypto >= 0.9
+* libcurl
 * libmagic (optional: --with-libmagic=PATH)
 
 Find here installation guides for [Ubuntu](https://github.com/skoobe/riofs/wiki/Ubuntu), [Centos](https://github.com/skoobe/riofs/wiki/Centos) and [MacOSX](https://github.com/skoobe/riofs/wiki/MacOSX)
