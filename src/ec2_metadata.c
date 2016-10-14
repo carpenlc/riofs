@@ -137,9 +137,9 @@ int parse_json_response(aws_credentials *creds, char *response)
 		}
 		else if (json_equals(response, &tokens[i], JSON_AWS_TOKEN) == 0)
 		{
-			creds->aws_token = malloc(
+			creds->aws_session_token = malloc(
 					sizeof(char*)*(tokens[i+1].end - tokens[i+1].start + 1));
-			strncpy(creds->aws_token,
+			strncpy(creds->aws_session_token,
 					&response[tokens[i+1].start],
 					tokens[i+1].end - tokens[i+1].start);
 			i++;
@@ -224,7 +224,7 @@ void print_aws_credentials(aws_credentials *creds)
 	printf("\nLast Updated [ %s ]\n", creds->last_updated);
 	printf("Access Key [ %s ]\n", creds->aws_access_key);
 	printf("Secret Access Key [ %s ]\n", creds->aws_secret_access_key);
-	printf("Token [ %s ]\n", creds->aws_token);
+	printf("Token [ %s ]\n", creds->aws_session_token);
 	printf("Expiration [ %s ]\n", creds->expiration);
 }
 
@@ -232,7 +232,9 @@ int main(void)
 {
 
 	aws_credentials *creds;
-	creds = malloc(sizeof(*creds));
+	if (creds == NULL) {
+		creds = malloc(sizeof(*creds));
+	}
 	get_aws_credentials(creds, "S3FileServer");
 	print_aws_credentials(creds);
 

@@ -20,7 +20,7 @@ typedef struct {
 	char *last_updated;
 	char *aws_access_key;
 	char *aws_secret_access_key;
-	char *aws_token;
+	char *aws_session_token;
 	char *expiration;
 } aws_credentials;
 
@@ -68,5 +68,11 @@ const char *JSON_AWS_TOKEN = "Token";
  * requires one extra to handle the trailing bracket.)
  */
 const int JSON_AWS_TOKEN_COUNT = 15;
+
+/*
+ * Prototype for function that will retrieve the AWS credential data
+ * associated with the IAM role.
+ */
+void get_aws_credentials(aws_credentials *creds, char *iam_role);
 
 #endif /* INCLUDE_EC2_METADATA_H_ */
