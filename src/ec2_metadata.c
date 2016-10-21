@@ -197,12 +197,17 @@ void remove_whitespace(char *json)
 /*
  * Retrieve the current credentials from AWS.
  */
-void get_aws_credentials(aws_credentials *creds, gchar *iam_role) {
+int get_aws_credentials(aws_credentials *creds, gchar *iam_role) {
 
 	char *url;
 	memory_structure response;
 	CURL *curl_handle;
 	CURLcode result;
+
+	// If space hasn't been allocated, allocate it now.
+	if (creds == NULL) {
+		creds = malloc(sizeof(*creds));
+	}
 
 	// Initialize the memory that will be used to store the JSON data
 	// returned in the cURL response.
@@ -222,9 +227,9 @@ void get_aws_credentials(aws_credentials *creds, gchar *iam_role) {
 
 	// Execute the cURL command
 	result = curl_easy_perform(curl_handle);
-	if (result != CURLE_OK)
-	{
+	if (result != CURLE_OK) {
         	printf("Error performing cURL operation.  Response [ %i ].", result);
+        	return -1;
 	}
 	else
 	{
@@ -237,6 +242,7 @@ void get_aws_credentials(aws_credentials *creds, gchar *iam_role) {
 	curl_easy_cleanup(curl_handle);
 	free(response.memory);
 	curl_global_cleanup();
+	return 0;
 }
 
 /*
